@@ -10,7 +10,7 @@ This code is adapted from: Cautaerts, Niels, et al. Ultramicroscopy 237 (2022): 
 3) Orientation indexation (Index_by_Pixel.ipynb)  
 Orientation indexing involved the following steps: generating a simulated diffraction pattern library for Pt using the diffsims package, matching each experimental nanobeam electron diffraction (NBED) pattern with simulation patterns in the library using cross-correlation, and selecting the best match result as the indexed orientation for each pixel with its corresponding NBED pattern.  
 Following image shows the indexed orientation mapping.  
-<img src="image/ori_map.png" alt="Logo" width="200" height="500">  
+<img src="image/ori_map.png" alt="Logo" width="500" height="200">  
 4) Scan distortion correction (Distortion_corr.ipynb)  
 Since the data was collected during in situ experiment, the drift of the sample leads to scan distortion of the 4d-STEM dataset. Assuming uniform distortion, affine transformations are applied to correct drift and distortion. Virtual dark field (VDF) images of the dataset are obtained, and features in the VDF images are detected using a scale-invariant feature transform (SIFT) detector from the openCV package. Feature points in different images are matched to obtain affine transformation matrices for drift and distortion correction. The affine transformations are then applied to align all 4D-STEM datasets.  
 5) Non-negative matrix factorization (NMF) grain segmentation (NMF_Grain_Seg.ipynb)  
@@ -21,10 +21,10 @@ Following image shows all the grains recognized:
 6) Grain association (Grain_Asso.ipynb and Grain_Chain_Analysis.ipynb)  
 The same grains in different frames are linked as a chain, with grains having the closest center of mass determined as the same grain. To account for grain disappearance during in situ experiments, all grains in the last frame of the dataset are registered first, and then the tracking is performed frame by frame. Grain chain objects are created to store information about the grains in different frames. Supplementary Fig. 2 illustrates the stored information, including grain morphology and orientations. It should be noted that grain orientation is reindexed based on the averaged diffraction patterns of the same grains during this process.  
 Following image shows the evolution of a grain as an example.  
-<img src="image/grain_chain.jpg" alt="Logo" width="500" height="600">  
+<img src="image/grain_chain.jpg" alt="Logo" width="500" height="500">  
 7) Statistics and visualization (Visual.ipynb)  
 With the information of each grain at each time frame, statistical analysis is conducted to examine the changes in grain size and orientation. By comparing the relevant quantities at different frames, the change in grain size and orientation for each grain is determined. Since these properties are stored together for each grain, the correlation between them is established by thresholding the misorientation values. After extracting the relevant information, the data is visualized in histogram form.  
 As shown in the following image, the distribution of grain rotation velocity can be extracted.  
-<img src="image/Rotation.jpg" alt="Logo" width="200" height="500">  
+<img src="image/Rotation.jpg" alt="Logo" width="500" height="300">  
 
 
