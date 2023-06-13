@@ -1,10 +1,25 @@
 # in situ 4D-STEM Analysis of Polycrystal Grain Evolution
   
-This is the analysis code for in situ 4D-STEM datasets focusing on the evolution of polycrystal grain orientation and morphology.  
-The analysis was performed in the following sequence: a) crystal orientation indexing, b) grain segmentation, c) matching grains in different frames, and d) accumulation of statistics and visualization.  
+This is the analysis code for in situ 4D-STEM datasets focusing on the evolution of polycrystal grain orientation and morphology. The input is sequential 4d-STEM datasets of the same evolving rigion. Output is the grain-wise morphology and orientation evolution.  
+The data analysis is conducted in the following sequence:  
+1) Diffraction pattern centering (Diff_align.ipynb)  
+
+2) Orientation indexation (Index_by_Pixel.ipynb)  
+
+3) Scan distortion correction (Distortion_corr.ipynb)  
+
+4) Non-negative matrix factorization (NMF) grain segmentation (NMF_Grain_Seg.ipynb)  
+
+5) Grain association (Grain_Asso.ipynb)  
+
+6) Temporal grain evolution analysis (Grain_Chain_Analysis.ipynb)  
+
+7) Statistics and visualization (Visual.ipynb)  
+
+The details of the data analysis is introduced in the following: a) crystal orientation indexing, b) grain segmentation, c) matching grains in different frames, and d) accumulation of statistics and visualization.  
 (a) Crystal orientation indexing:  
 The 4D-STEM dataset in block file format was imported using the hyperspy package. Orientation indexing involved the following steps: generating a simulated diffraction pattern library for Pt using the diffsims package, matching each experimental nanobeam electron diffraction (NBED) pattern with simulation patterns in the library using cross-correlation, and selecting the best match result as the indexed orientation for each pixel with its corresponding NBED pattern.  
-The diffraction pattern library was generated with an angle interval of 1˚. To match the experimental NBED pattern, the reciprocal space resolution of the simulation patterns was set to 0.0218 pixel/Å, with an acceleration voltage of 200 kV. The simulated library was used to index the experimental NBED patterns via the pyxem package. The indexing confidence was defined as the value of the normalized cross-correlation of the diffraction template with the NBED pattern.
+The diffraction pattern library was generated with an angle interval of 1˚. The simulated library was used to index the experimental NBED patterns via the pyxem package. The indexing confidence was defined as the value of the normalized cross-correlation of the diffraction template with the NBED pattern.
   
 (b) Grain segmentation:  
 Grain segmentation was conducted using non-negative matrix factorization (NMF). Unlike traditional methods such as hierarchical clustering or minimum spanning tree, NMF does not require prior knowledge of local orientation. This is advantageous because traditional methods can propagate errors caused by mis-indexed local orientations, which often occur due to limited data quality. NMF automatically identifies and clusters similar NBED patterns, avoiding these error propagation issues. NMF has been shown to work well on 4D-STEM datasets for grain segmentation. Another advantage of NMF is its ability to determine grain locations and areas regardless of grain overlapping. In the case of nanocrystalline films, where initial grain size is smaller than the film thickness and grains overlap near grain boundaries (GBs), traditional methods that assign pixels to only one grain are not suitable. Therefore, NMF is applied for grain segmentation.  
