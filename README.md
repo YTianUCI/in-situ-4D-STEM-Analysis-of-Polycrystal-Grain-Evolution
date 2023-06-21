@@ -4,7 +4,7 @@
 
 <br />
 <div align="center">
-  <h3 align="center">an in situ 4d-STEM datasets process and analysis pipeline for crystallography orientation and morphology </h3>
+  <h3 align="center">an in situ 4d-STEM datasets process and analysis pipeline for the evolution of crystallography orientation and morphology </h3>
   <p align="center">
     <br />
     <br />
@@ -45,7 +45,7 @@ Following image shows the indexed orientation mapping.
 <img src="image/ori_map.png" alt="Logo" width="500" height="200">  
 ### 4) Scan distortion correction (Distortion_corr.ipynb)  
 Since the data was collected during in situ experiment, the drift of the sample leads to scan distortion of the 4d-STEM dataset. There are several type of models to describe the distortion/drift of the datasets, respectively rigid, affine, perspective and non-linear, as shown in the following image (from Uchida S. Image processing and recognition for biological images. Development, growth & differentiation, 2013, 55(4): 523-549.).  
-<img src="image/registration_model.png" alt="Logo" width="500" height="450">  
+<img src="image/registration_model.png" alt="Logo" width="500" height="400">  
 When the sample drift is uniform, affine transformations can be applied to correct drift and distortion. We firstly try the affine transformation. Virtual dark field (VDF) images of the dataset are obtained, and features in the VDF images are detected using a scale-invariant feature transform (SIFT) detector from the openCV package. Feature points in different images are matched to obtain affine transformation matrices for drift and distortion correction. The affine transformations are then applied to align all 4D-STEM datasets.  
 Then we also try the non-linear model for correcting the distortion, since when the sample drift is complicated, the 4d-stem dataset distortion would only be described by non-linear model. It turns out that the non-linear model works better. We take the non-linear model to correct the distortion in our dataset. Inverse pole figures of the dataset are obtained from step #3, and the registration matrix was learnt from the elastic registration tool called bUnwarpJ (Arganda-Carreras I, Sorzano C O S, Marabini R, et al. Consistent and elastic registration of histological sections using vector-spline regularization//Computer Vision Approaches to Medical Image Analysis: Second International ECCV Workshop, CVAMIA 2006). We take frame 5 as the reference and register all other images to it. The elastic transformations are then applied to align all 4D-STEM datasets.  
 ### 5) Non-negative matrix factorization (NMF) grain segmentation (NMF_Grain_Seg.ipynb)  
